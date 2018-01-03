@@ -32,6 +32,7 @@
   },
   "scripts": {
     "coverage": "nyc --check-coverage --branches 90 --functions 90 tape test/*.js",
+    "coverage-test": "nyc --check-coverage --branches 90 --functions 90 --reporter=html --reporter=text --reporter=clover tape test/*.js",
     "standard": "standard lib",
     "test": "tape test/base32.js | tap-dot",
     "build": "babel src -d lib"

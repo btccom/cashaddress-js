@@ -1,4 +1,5 @@
 'use strict'
+/** global: Buffer */
 let tape = require('tape')
 let fixtures = require('./fixtures/base32')
 let base32 = require('../src/index')
@@ -68,6 +69,15 @@ fixtures.fromWords.invalid.forEach((f) => {
         t.plan(1)
         t.throws(function () {
             base32.fromWords(f.words)
+        }, new RegExp(f.exception))
+    })
+})
+
+fixtures.encode.invalid.forEach((f) => {
+    tape(`fromWords fails with ${f.exception}`, (t) => {
+        t.plan(1)
+        t.throws(function () {
+            base32.encode(f.prefix, f.words)
         }, new RegExp(f.exception))
     })
 })
