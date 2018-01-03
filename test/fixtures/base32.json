@@ -11,6 +11,20 @@
       }
     ]
   },
+  "encode": {
+    "invalid": [
+      {
+        "exception": "Exceeds Base32 maximum length",
+        "prefix": "bitcoincash",
+        "words": [14,20,15,7,13,26,0,25,18,6,11,13,8,21,4,20,3,17,2,29,3,14,20,15,7,13,26,0,25,18,6,11,13,8,21,4,20,3,17,2,29,14,20,15,7,13,26,0,25,18,6,11,13,8,21,4,20,3,17,2,29,14,20,15,7,13,26,0,25,18,6,11,13,8,21,4,20,3,17,2,29]
+      },
+      {
+        "exception": "Non 5-bit word",
+        "prefix": "bitcoincash",
+        "words": [ 0, 1, 32, 10, 0, 16, 2, 19, 23, 22, 16, 10, 17, 2, 30, 26, 10, 5, 27, 27, 16, 26, 16, 21, 24, 14, 25, 9, 30, 21, 12, 24, 14, 12 ]
+      }
+    ]
+  },
   "base32": {
     "valid": [
       {
@@ -68,8 +82,32 @@
         "exception": "No separator character for bitcoincashqpm2qsznhks23z7629mms6s4cwef74vcwvy22gdx6a"
       },
       {
+        "string": ":qpm2qsznhks23z7629mms6s4cwef74vcwvy22gdx6a",
+        "exception": "Missing prefix for :qpm2qsznhks23z7629mms6s4cwef74vcwvy22gdx6a"
+      },
+      {
         "string": "bitcoincash:qpm2qsznhks23z7629mms6s4cwef74vcwvy22gdx6z",
         "exception": "Invalid checksum for bitcoincash:qpm2qsznhks23z7629mms6s4cwef74vcwvy22gdx6z"
+      },
+      {
+        "string": "bitcoincash:qpm2qsznhks23z7629mms6s4cwef74vcw1y22gdx6z",
+        "exception": "Unknown character 1"
+      },
+      {
+        "string": "bitcoincash:gdx6z",
+        "exception": "Data too short"
+      },
+      {
+        "string": "abxca",
+        "exception": "too short"
+      },
+      {
+        "string": "abxcaabxcaabxcaabxcaabxcaabxcaabxcaabxcaabxcaabxcaabxcaabxcaabxcaabxcaabxcaabxcaabxcaabxcaabxcaabxcaabxcaabxcaabxcaabxcaabxcaabxca",
+        "exception": "too long"
+      },
+      {
+        "string": "bitcoincash:pqQ3728yW0y47sqN6l2na30mcW6zm78dZq5ucqzc37",
+        "exception": "Mixed-case string bitcoincash:pqQ3728yW0y47sqN6l2na30mcW6zm78dZq5ucqzc37"
       }
     ]
   }

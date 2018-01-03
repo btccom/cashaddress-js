@@ -8,8 +8,9 @@ let CSLEN = 8
 let ALPHABET_MAP = {}
 for (let z = 0; z < ALPHABET.length; z++) {
     let x = ALPHABET.charAt(z)
-
-    if (ALPHABET_MAP[x] !== undefined) throw new TypeError(x + ' is ambiguous')
+    if (ALPHABET_MAP[x] !== undefined) {
+        throw new TypeError(x + ' is ambiguous')
+    }
     ALPHABET_MAP[x] = z
 }
 
@@ -53,7 +54,10 @@ function prefixChk (prefix) {
 
 function encode (prefix, words) {
     // too long?
-    if ((prefix.length + 7 + words.length) > 90) throw new TypeError('Exceeds Bech32 maximum length')
+    if ((prefix.length + CSLEN + 1 + words.length) > 90) {
+        throw new TypeError('Exceeds Base32 maximum length')
+    }
+
     prefix = prefix.toLowerCase()
 
     // determine chk mod
@@ -61,7 +65,10 @@ function encode (prefix, words) {
     let result = prefix + SEPARATOR
     for (let i = 0; i < words.length; ++i) {
         let x = words[i]
-        if ((x >>> 5) !== 0) throw new Error('Non 5-bit word')
+        if ((x >>> 5) !== 0) {
+            throw new Error('Non 5-bit word')
+        }
+
         chk = polymodStep(chk).xor(new BigInteger('' + x))
         result += ALPHABET.charAt(x)
     }
@@ -80,36 +87,58 @@ function encode (prefix, words) {
 }
 
 function decode (str) {
-    if (str.length < 8) throw new TypeError(str + ' too short')
-    if (str.length > 90) throw new TypeError(str + ' too long')
+    if (str.length < 8) {
+        throw new TypeError(str + ' too short')
+    }
+    if (str.length > 90) {
+        throw new TypeError(str + ' too long')
+    }
 
     // don't allow mixed case
     let lowered = str.toLowerCase()
     let uppered = str.toUpperCase()
-    if (str !== lowered && str !== uppered) throw new Error('Mixed-case string ' + str)
+    if (str !== lowered && str !== uppered) {
+        throw new Error('Mixed-case string ' + str)
+    }
+
     str = lowered
 
     let split = str.lastIndexOf(SEPARATOR)
-    if (split === -1) throw new Error('No separator character for ' + str)
-    if (split === 0) throw new Error('Missing prefix for ' + str)
+    if (split === -1) {
+        throw new Error('No separator character for ' + str)
+    }
+
+    if (split === 0) {
+        throw new Error('Missing prefix for ' + str)
+    }
 
     let prefix = str.slice(0, split)
     let wordChars = str.slice(split + 1)
-    if (wordChars.length < 6) throw new Error('Data too short')
+    if (wordChars.length < 6) {
+        throw new Error('Data too short')
+    }
 
     let chk = prefixChk(prefix)
     let words = []
     for (let i = 0; i < wordChars.length; ++i) {
         let c = wordChars.charAt(i)
         let v = ALPHABET_MAP[c]
-        if (v === undefined) throw new Error('Unknown character ' + c)
+        if (v === undefined) {
+            throw new Error('Unknown character ' + c)
+        }
+
         chk = polymodStep(chk).xor(new BigInteger('' + v))
         // not in the checksum?
-        if (i + CSLEN >= wordChars.length) continue
+        if (i + CSLEN >= wordChars.length) {
+            continue
+        }
         words.push(v)
     }
 
-    if (chk.toString(10) !== '1') throw new Error('Invalid checksum for ' + str)
+    if (chk.toString(10) !== '1') {
+        throw new Error('Invalid checksum for ' + str)
+    }
+
     return { prefix, words }
 }
 
@@ -134,8 +163,12 @@ function convert (data, inBits, outBits, pad) {
             result.push((value << (outBits - bits)) & maxV)
         }
     } else {
-        if (bits >= inBits) throw new Error('Excess padding')
-        if ((value << (outBits - bits)) & maxV) throw new Error('Non-zero padding')
+        if (bits >= inBits) {
+            throw new Error('Excess padding')
+        }
+        if ((value << (outBits - bits)) & maxV) {
+            throw new Error('Non-zero padding')
+        }
     }
 
     return result
