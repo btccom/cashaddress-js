@@ -1,0 +1,44 @@
+{
+  "name": "cashaddress",
+  "version": "1.0.0",
+  "description": "Base32 encoding / decoding of bitcoin cash addresses",
+  "keywords": [
+    "base32",
+    "bitcoin cash",
+    "crypto",
+    "crytography",
+    "decode",
+    "decoding",
+    "encode",
+    "encoding"
+  ],
+  "main": "lib/index.js",
+  "license": "MIT",
+  "dependencies": {
+    "bigi": "^1.4.2"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-latest": "^6.24.1",
+    "grunt": "^1.0.1",
+    "nyc": "^10.2.0",
+    "standard": "*",
+    "tap-dot": "*",
+    "tape": "^4.6.3"
+  },
+  "repository": {
+    "url": "http://github.com/btccom/cashaddress-js",
+    "type": "git"
+  },
+  "scripts": {
+    "coverage": "nyc --check-coverage --branches 90 --functions 90 tape test/*.js",
+    "standard": "standard lib",
+    "test": "tape test/base32.js | tap-dot",
+    "build": "babel src -d lib"
+  },
+  "babel": {
+    "presets": [
+      "latest"
+    ]
+  }
+}
