@@ -1,4 +1,6 @@
 'use strict'
+/** global: Buffer */
+
 let base32 = require('./base32')
 
 let P2SH = "scripthash";
