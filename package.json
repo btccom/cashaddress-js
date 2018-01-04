@@ -1,6 +1,6 @@
 {
   "name": "cashaddress",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Base32 encoding / decoding of bitcoin cash addresses",
   "keywords": [
     "bitcoin",
