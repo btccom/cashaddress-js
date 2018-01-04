@@ -4,8 +4,8 @@ let tape = require('tape')
 let fixtures = require('./fixtures/base32')
 
 let builds = [
-    require('../src/index'),
-    require('../lib/index'),
+    require('../src/base32'),
+    require('../lib/base32'),
 ];
 
 builds.map(function (base32) {
