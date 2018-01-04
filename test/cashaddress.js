@@ -2,10 +2,11 @@
 /** global: Buffer */
 let tape = require('tape')
 let fixtures = require('./fixtures/base32')
-let base32 = require('../lib/index')
+let base32 = require('../lib/base32')
 
 let builds = [
-    require('../lib/cashaddress'),
+    require('../lib/index'),
+    require('../src/index'),
 ];
 
 builds.map(function (CashAddress) {
